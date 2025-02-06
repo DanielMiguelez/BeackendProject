@@ -20,7 +20,7 @@ const CategoryController = {
                     id:req.params.id
                 }
             })
-            .then(category => res.status(201).send({ msg: "actualizada la categoria" }))
+            .then(category => res.status(201).send({ msg: "actualizada la categoria", category}))
         } catch (error) {
             console.error(error);
             res.status(500).send({msg:"hubo un problema... ", error})
