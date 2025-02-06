@@ -30,8 +30,12 @@ const ProductController = {
                     id:req.params.id
                 }
             })
+
+            if (req.body.CategoryIds) {  
+                await product.setCategories(req.body.CategoryIds);  // Debe ser un ARRAY
+            }
            
-            const updatedProduct = await Product.findByPk(req.params.id);
+            const updatedProduct = await Product.findByPk(req.params.id, { include: { model: Category, as: 'categories' } });
 
             res.send({ msg: "ACTUALIZADO CON ÉXITO", product: updatedProduct });
 
@@ -128,6 +132,20 @@ const ProductController = {
             }
     
             res.status(200).send({msg:"encontrado", product})
+        } catch (error) {
+            console.error(error);
+            res.status(500).send({msg:"hubo un problema... "})
+        }
+    },
+
+    async productsOrdered (req,res){
+        try {
+            const productsOrdered = await Product.findAll({
+                order: [
+                    ['price', 'DESC']
+                ]
+            })
+            res.status(200).send({msg:"productos ordenados", productsOrdered})
         } catch (error) {
             console.error(error);
             res.status(500).send({msg:"hubo un problema... "})

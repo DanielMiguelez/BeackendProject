@@ -34,7 +34,7 @@ const CategoryController = {
                     id : req.params.id
                 }
             })
-            .then(category => res.status(200).send({msg:"se ha eliminado la categoria", category}))
+            .then(category => res.status(200).send({msg:"se ha eliminado la categoria", category:req.params.id}))
         } catch (error) {
             console.error(error);
             res.status(500).send({msg:"hubo un problema... ", error})
@@ -78,7 +78,7 @@ const CategoryController = {
                     }
                 }
             })
-            res.status(200).send({msg:"Categoria por nombre", categoryByName})
+            res.status(200).send({msg:"Categoria por nombre", categoryByName:req.params.name})
         } catch (error) {
             console.error(error)
             res.status(500).send({msg:"no se pudo encontrar la categoria"});

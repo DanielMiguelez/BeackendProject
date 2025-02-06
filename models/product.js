@@ -18,12 +18,6 @@ module.exports = (sequelize, DataTypes) => {
         as: 'categories'            // Alias para la relación
       });
      
-      Product.belongsToMany(models.Order, {
-        through: 'OrderProduct',
-        foreignKey: 'ProductId',
-        otherKey: 'OrderId',
-        as: 'orders'
-      });
     }
   }
   Product.init({

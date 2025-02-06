@@ -10,5 +10,6 @@ router.get("/getAllProductsWithCategories", ProductController.getAllProductsWith
 router.get("/getProductById/:id", ProductController.getProductById)
 router.get("/getProductByName/:name", ProductController.getProductByName)
 router.get("/getProductByPrice/:price", ProductController.getProductByPrice)
+router.get("/productsOrdered", ProductController.productsOrdered)
 
 module.exports = router;
