@@ -1,4 +1,5 @@
-const {Category, Product} = require("../models/index");
+const {Category, Product, Sequelize} = require("../models/index");
+const {Op}= Sequelize;
 
 const CategoryController = {
 
@@ -55,6 +56,32 @@ const CategoryController = {
         } catch (error) {
             console.error(error);
             res.status(500).send({msg:"hubo un problema... "})
+        }
+    },
+
+    async getCategoryById (req,res){
+        try {
+            const category = await Category.findByPk(req.params.id)
+            res.status(500).send({msg:"Categoria encontrada", category}) 
+        } catch (error) {
+            console.error(error)
+            res.status(500).send({msg:"no se pudo encontrar la categoria"});
+        }
+    },
+
+    async getCategoryByName(req,res){
+        try {
+            const categoryByName = await Category.findOne({
+                where:{
+                    name:{
+                        [Op.like]:`%${req.params.name}%`
+                    }
+                }
+            })
+            res.status(200).send({msg:"Categoria por nombre", categoryByName})
+        } catch (error) {
+            console.error(error)
+            res.status(500).send({msg:"no se pudo encontrar la categoria"});
         }
     }
 
