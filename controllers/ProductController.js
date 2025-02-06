@@ -81,6 +81,57 @@ const ProductController = {
             console.error(error);
             res.status(500).send({msg:"hubo un problema... "})
         }
+    },
+
+    async getProductById (req,res){
+        try {
+            const product = await Product.findOne({
+                where:{
+                    id:req.params.id
+                }
+            })
+            res.status(200).send({msg:"encontrado", product})
+        } catch (error) {
+            console.error(error);
+            res.status(500).send({msg:"hubo un problema... "})
+        }
+    },
+
+    async getProductByName(req,res){
+       try {
+        const producto = await Product.findOne({
+            where:{
+                name:req.params.name
+            }
+        })
+
+        if (!producto) {
+            return res.status(404).send({ msg: "Producto no encontrado" });
+        }
+
+        res.status(200).send({msg:"encontrado", producto})
+       } catch (error) {
+            console.error(error);
+            res.status(500).send({msg:"hubo un problema... "})
+       }
+    },
+
+    async getProductByPrice(req,res){
+        try {
+            const product = await Product.findAll({
+                where:{
+                    price:req.params.price
+                }
+            })
+            if (!product) {
+                return res.status(404).send({ msg: "Producto no encontrado" });
+            }
+    
+            res.status(200).send({msg:"encontrado", product})
+        } catch (error) {
+            console.error(error);
+            res.status(500).send({msg:"hubo un problema... "})
+        }
     }
 
 
