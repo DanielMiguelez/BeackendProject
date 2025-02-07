@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
+const {authentication} = require ("../middleware/authentication")
 
 const ProductController = require("../controllers/ProductController");
 
-router.post("/createProduct", ProductController.productCreate)
+router.post("/createProduct",authentication,ProductController.productCreate)
 router.put("/productUpdate/:id", ProductController.productUpdate)
 router.delete("/destroyProduct/:id", ProductController.destroyProduct)
 router.get("/getAllProductsWithCategories", ProductController.getAllProductsWithCategories)

@@ -4,7 +4,7 @@ const ProductController = {
 
     async productCreate(req,res){
         try {
-            const product = await Product.create(req.body);
+            const product = await Product.create({...req.body, UserId:req.user.id});
 
             await product.addCategory(req.body.CategoryId)
 
