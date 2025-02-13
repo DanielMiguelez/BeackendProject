@@ -1,4 +1,4 @@
-const { User, Token, Sequelize } = require("../models/index")
+const { User, Token, Sequelize, Product, Order } = require("../models/index")
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 const { jwt_secret } = require('../config/config.json')['development']
@@ -32,6 +32,38 @@ const UserController = {
         } catch (error) {
             console.error(error);
             res.status(500).send({ msg: "hubo un problema... " })
+        }
+    },
+
+    async getCurrentUserInfo (){
+        try {
+            const userId = req.user.id;
+
+            const user = await User.findByPk(userId,{
+                attributes:["id", "name", "email"],
+                include:[{
+                    model:Order,
+                    as: 'orders',
+                    attributes:['id', 'status'],
+
+                    include:[{
+                        model:Product,
+                        as:'products',
+                        attributes: ["id", "name", "description", "price"],
+                        through: { attributes: [] },
+                    }]
+                }]
+            })
+
+            if (!user) {
+                return res.status(404).json({ message: "Usuario no encontrado" });
+              }
+          
+              return res.status(200).json(user);
+              
+        } catch (error) {
+            console.error(error);
+            res.status(500).send({msg:"hubo un problema... "})
         }
     },
 

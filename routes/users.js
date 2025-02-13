@@ -5,6 +5,7 @@ const {authentication} = require('../middleware/authentication')
 
 router.post("/createUser", UserController.createUser)
 router.get("/getAllUsers", UserController.getAllUsers)
+router.get("/getInfoUserConnected", authentication, UserController.getCurrentUserInfo)
 router.post("/login", UserController.login)
 router.delete("/logout",authentication, UserController.logout)
 
