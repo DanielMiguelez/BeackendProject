@@ -35,7 +35,7 @@ const UserController = {
         }
     },
 
-    async getCurrentUserInfo (){
+    async getCurrentUserInfo (req,res){
         try {
             const userId = req.user.id;
 
