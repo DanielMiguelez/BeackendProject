@@ -17,6 +17,13 @@ module.exports = (sequelize, DataTypes) => {
         otherKey: 'CategoryId',     // Clave foránea en la tabla intermedia
         as: 'categories'            // Alias para la relación
       });
+
+      Product.belongsToMany(models.Order, {
+        through: "OrderProduct", // Tabla intermedia para pedidos y productos
+        foreignKey: "productId",
+        otherKey: "orderId",
+        as: "orders",
+      });
      
     }
   }
